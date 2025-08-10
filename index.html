@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gama Solutions | Integração & Automação Inteligente</title>
+  <meta name="description" content="Gama Solutions: soluções corporativas de integração de dados, automações em N8n e Airbyte, e BI Analytics para e-commerce." />
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- AOS Animations -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <!-- Fonte -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f14;
+      /* preto-base */
+      --panel: #10161f;
+      /* cartões */
+      --muted: #94a3b8;
+      /* cinza texto */
+      --green: #22c55e;
+      /* emerald 500 */
+      --green-2: #10b981;
+      /* emerald 400 */
+      --neon: #23ff95;
+      /* glow */
+    }
+
+    body {
+      font-family: 'Poppins', ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: var(--bg);
+      color: #e5e7eb;
+    }
+
+    /* Nav translúcida + efeito ao rolar */
+    .nav-overlay {
+      background: rgba(5, 10, 18, .25);
+      backdrop-filter: blur(8px);
+      transition: background-color .25s ease, box-shadow .25s ease;
+    }
+
+    .nav-scrolled {
+      background: rgba(5, 10, 18, .7);
+      box-shadow: 0 10px 35px rgba(0, 0, 0, .45);
+    }
+
+    /* Hero com grade e glows verdes */
+    .tech-hero {
+      position: relative;
+      background:
+        radial-gradient(900px 420px at 80% 20%, rgba(35, 255, 149, .15), transparent 60%),
+        radial-gradient(700px 360px at 10% 85%, rgba(34, 197, 94, .18), transparent 60%),
+        linear-gradient(135deg, #0b0f14 0%, #0d1320 55%, #0b0f14 100%);
+    }
+
+    .tech-hero:after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(35, 255, 149, .08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(35, 255, 149, .08) 1px, transparent 1px);
+      background-size: 42px 42px;
+      pointer-events: none;
+    }
+
+    /* botões */
+    .btn-primary {
+      background: var(--green);
+      color: #00140a;
+      box-shadow: 0 10px 30px rgba(34, 197, 94, .3);
+      transition: transform .12s ease, box-shadow .2s ease, background .2s ease;
+    }
+
+    .btn-primary:hover {
+      background: var(--green-2);
+      transform: translateY(-1px);
+      box-shadow: 0 14px 40px rgba(34, 197, 94, .35);
+    }
+
+    .btn-outline {
+      border: 1.5px solid rgba(255, 255, 255, .35);
+      color: #e5e7eb;
+    }
+
+    .btn-outline:hover {
+      border-color: var(--neon);
+      color: #fff;
+    }
+
+    /* cartões */
+    .card {
+      background: var(--panel);
+      border: 1px solid rgba(255, 255, 255, .06);
+    }
+
+    .card:hover {
+      border-color: rgba(35, 255, 149, .25);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
+    }
+
+    /* títulos */
+    .kicker {
+      letter-spacing: .2em;
+      color: #86efac;
+    }
+
+    .title-accent {
+      color: var(--neon);
+    }
+  </style>
+</head>
+
+<body class="antialiased selection:bg-emerald-400/20 selection:text-white">
+  <!-- Navbar -->
+  <nav class="fixed w-full z-50 nav-overlay">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+      <a href="#" class="text-2xl font-extrabold tracking-tight text-emerald-400">Gama Solutions</a>
+      <ul class="hidden md:flex space-x-8 text-sm font-medium text-slate-200">
+        <li><a href="#sobre" class="hover:text-emerald-400">Sobre</a></li>
+        <li><a href="#servicos" class="hover:text-emerald-400">Serviços</a></li>
+        <li><a href="#tecnologias" class="hover:text-emerald-400">Tecnologias</a></li>
+        <li><a href="#cases" class="hover:text-emerald-400">Cases</a></li>
+        <li><a href="#clientes" class="hover:text-emerald-400">Clientes</a></li>
+        <li><a href="#contato" class="hover:text-emerald-400">Contato</a></li>
+      </ul>
+      <button class="md:hidden text-slate-100 focus:outline-none" id="menu-btn" aria-expanded="false" aria-controls="menu">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+    <!-- Mobile Menu -->
+    <div id="menu" class="md:hidden hidden bg-black/70 backdrop-blur-md">
+      <ul class="px-6 py-4 space-y-4 text-sm text-slate-100">
+        <li><a href="#sobre" class="block hover:text-emerald-400">Sobre</a></li>
+        <li><a href="#servicos" class="block hover:text-emerald-400">Serviços</a></li>
+        <li><a href="#tecnologias" class="block hover:text-emerald-400">Tecnologias</a></li>
+        <li><a href="#cases" class="block hover:text-emerald-400">Cases</a></li>
+        <li><a href="#clientes" class="block hover:text-emerald-400">Clientes</a></li>
+        <li><a href="#contato" class="block hover:text-emerald-400">Contato</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="tech-hero min-h-screen flex items-center">
+    <!-- glows decorativos -->
+    <div class="absolute -right-24 top-24 w-96 h-96 bg-emerald-400/20 blur-3xl rounded-full"></div>
+    <div class="absolute -left-24 bottom-16 w-80 h-80 bg-emerald-500/20 blur-3xl rounded-full"></div>
+
+    <div class="container relative z-[1] mx-auto px-6 pt-28 pb-16 grid lg:grid-cols-2 gap-10 items-center">
+      <!-- Texto -->
+      <div data-aos="fade-up">
+        <p class="kicker text-xs mb-3">INTEGRAÇÃO & AUTOMAÇÃO</p>
+        <h1 class="text-5xl md:text-6xl font-extrabold leading-tight">
+          Sua TI sem travas.<br /> Seu negócio em <span class="title-accent">alta performance.</span>
+        </h1>
+        <p class="text-lg md:text-xl text-slate-300 max-w-xl mt-6">
+          Pipelines N8n/Airbyte, integrações Shopify e BI em BigQuery/Metabase — com segurança e escala.
+        </p>
+        <div class="mt-10 flex flex-wrap items-center gap-4">
+          <a href="#servicos" class="btn-primary inline-flex items-center rounded-full px-8 py-3 font-semibold">Ver serviços</a>
+          <a href="#contato" class="btn-outline inline-flex items-center rounded-full px-8 py-3 font-semibold">Fale com a gente</a>
+        </div>
+      </div>
+      <!-- Ilustração -->
+      <div class="relative" data-aos="zoom-in" data-aos-delay="120">
+        <img src="monitor.png" alt="Dashboard em monitor" class="mx-auto max-w-md lg:max-w-lg drop-shadow-2xl rounded-xl ring-1 ring-white/10" />
+      </div>
+    </div>
+  </header>
+
+  <!-- Sobre -->
+  <section id="sobre" class="py-20 bg-[#0e141c]">
+    <div class="container mx-auto px-6" data-aos="fade-right">
+      <h2 class="text-3xl font-bold text-emerald-400 mb-4">Sobre a Gama Solutions</h2>
+      <p class="text-slate-300 mb-4">Somos especialistas em integração de dados e automação. Utilizamos N8n, Airbyte, dbt, Python e GCP para entregar soluções escaláveis que eliminam tarefas manuais e aceleram decisões.</p>
+      <p class="text-slate-300">Nossa missão é potencializar e-commerces com pipelines inteligentes e análises avançadas, garantindo performance e segurança.</p>
+    </div>
+  </section>
+
+  <!-- Serviços -->
+  <section id="servicos" class="py-20 bg-[#0b1118]">
+    <div class="container mx-auto px-6" data-aos="fade-left">
+      <h2 class="text-3xl font-bold text-emerald-400 text-center mb-12">Serviços</h2>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="card p-6 rounded-xl hover:shadow-lg transition" data-aos="zoom-in">
+          <h3 class="text-xl font-semibold mb-2 text-white">Automação de Workflows</h3>
+          <p class="text-slate-300">Agentes em N8n para automação de processos repetitivos.</p>
+        </div>
+        <div class="card p-6 rounded-xl hover:shadow-lg transition" data-aos="zoom-in" data-aos-delay="100">
+          <h3 class="text-xl font-semibold mb-2 text-white">Integração de Dados</h3>
+          <p class="text-slate-300">Conexão Shopify, Meta Ads e Klaviyo via Airbyte e modelagem com dbt.</p>
+        </div>
+        <div class="card p-6 rounded-xl hover:shadow-lg transition" data-aos="zoom-in" data-aos-delay="200">
+          <h3 class="text-xl font-semibold mb-2 text-white">BI Analytics</h3>
+          <p class="text-slate-300">Dashboards em Power BI, Looker, Metabase e análises com BigQuery ML.</p>
+        </div>
+        <div class="card p-6 rounded-xl hover:shadow-lg transition" data-aos="zoom-in" data-aos-delay="300">
+          <h3 class="text-xl font-semibold mb-2 text-white">Desenvolvimento de Sistemas</h3>
+          <p class="text-slate-300">APIs e back-end escaláveis com Cloud Run, Node.js e Python.</p>
+        </div>
+        <div class="card p-6 rounded-xl hover:shadow-lg transition" data-aos="zoom-in" data-aos-delay="400">
+          <h3 class="text-xl font-semibold mb-2 text-white">Analytics Avançado</h3>
+          <p class="text-slate-300">Modelos em Python, BigQuery ML e relatórios automatizados.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tecnologias -->
+  <section id="tecnologias" class="py-20 bg-[#0e141c]">
+    <div class="container mx-auto px-6" data-aos="fade-up">
+      <h2 class="text-3xl font-bold text-emerald-400 text-center mb-12">Tecnologias</h2>
+      <div class="flex flex-wrap justify-center items-center gap-8 text-slate-200">
+        <!-- Languages & Frameworks -->
+        <div class="flex flex-col items-center">
+          <img src="https://cdn.simpleicons.org/python" alt="Python" class="h-16 mb-2" />
+          <span class="text-sm">Python</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <img src="https://cdn.simpleicons.org/javascript" alt="JavaScript" class="h-16 mb-2" />
+          <span class="text-sm">JavaScript</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <img src="https://cdn.simpleicons.org/typescript" alt="TypeScript" class="h-16 mb-2" />
+          <span class="text-sm">TypeScript</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <img src="https://cdn.simpleicons.org/react" alt="React" class="h-16 mb-2" />
+          <span class="text-sm">React</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <img src="https://cdn.simpleicons.org/nextdotjs" alt="Next.js" class="h-16 mb-2" />
+          <span class="text-sm">Next.js</span>
+        </div>
+        <!-- Data Storage & Streaming -->
+        <div class="flex flex-col items-center">
+          <img src="https://cdn.simpleicons.org/postgresql" alt="PostgreSQL" class="h-16 mb-2" />
+          <span class="text-sm">PostgreSQL</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <img src="https://cdn.simpleicons.org/mysql" alt="MySQL" class="h-16 mb-2" />
+          <span class="text-sm">MySQL</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <img src="https://cdn.simpleicons.org/mongodb" alt="MongoDB" class="h-16 mb-2" />
+          <span class="text-sm">MongoDB</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <img src="https://cdn.simpleicons.org/redis" alt="Redis" class="h-16 mb-2" />
+          <span class="text-sm">Redis</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <img src="https://cdn.simpleicons.org/apachekafka" alt="Kafka" class="h-16 mb-2" />
+          <span class="text-sm">Kafka</span>
+        </div>
+        <!-- ETL & Orchestration -->
+        <div class="flex flex-col items-center">
+          <img src="https://cdn.simpleicons.org/apacheairflow" alt="Airflow" class="h-16 mb-2" />
+          <span class="text-sm">Airflow</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <!-- n8n SVG -->
+          <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="h-16 mb-2" fill="#22c55e">
+            <title>n8n</title>
+            <path d="M21.4737 5.6842c-1.1772 0-2.1663.8051-2.4468 1.8947h-2.8955c-1.235 0-2.289.893-2.492 2.111l-.1038.623a1.263 1.263 0 0 1-1.246 1.0555H11.289c-.2805-1.0896-1.2696-1.8947-2.4468-1.8947s-2.1663.8051-2.4467 1.8947H4.973c-.2805-1.0896-1.2696-1.8947-2.4468-1.8947C1.1311 9.4737 0 10.6047 0 12s1.131 2.5263 2.5263 2.5263c1.1772 0 2.1663-.8051 2.4468-1.8947h1.4223c.2804 1.0896 1.2696 1.8947 2.4467 1.8947 1.1772 0 2.1663-.8051 2.4468-1.8947h1.0008a1.263 1.263 0 0 1 1.2459 1.0555l.1038.623c.203 1.218 1.257 2.111 2.492 2.111h.3692c.2804 1.0895 1.2696 1.8947 2.4468 1.8947 1.3952 0 2.5263-1.131 2.5263-2.5263s-1.131-2.5263-2.5263-2.5263c-1.1772 0-2.1664.805-2.4468 1.8947h-.3692a1.263 1.263 0 0 1-1.246-1.0555l-.1037-.623A2.52 2.52 0 0 0 13.9607 12a2.52 2.52 0 0 0 .821-1.4794l.1038-.623a1.263 1.263 0 0 1 1.2459-1.0555h2.8955c.2805 1.0896 1.2696 1.8947 2.4468 1.8947 1.3952 0 2.5263-1.131 2.5263-2.5263s-1.131-2.5263-2.5263-2.5263m0 1.2632a1.263 1.263 0 0 1 1.2631 1.2631 1.263 1.263 0 0 1-1.2631 1.2632 1.263 1.263 0 0 1-1.2632-1.2632 1.263 1.263 0 0 1 1.2632-1.2631M2.5263 10.7368A1.263 1.263 0 0 1 3.7895 12a1.263 1.263 0 0 1-1.2632 1.2632A1.263 1.263 0 0 1 1.2632 12a1.263 1.263 0 0 1 1.2631-1.2632m6.3158 0A1.263 1.263 0 0 1 10.1053 12a1.263 1.263 0 0 1-1.2632 1.2632A1.263 1.263 0 0 1 7.579 12a1.263 1.263 0 0 1 1.2632-1.2632m10.1053 3.7895a1.263 1.263 0 0 1 1.2631 1.2632 1.263 1.263 0 0 1-1.2631 1.2631 1.263 1.263 0 0 1-1.2632-1.2631 1.263 1.263 0 0 1 1.2632-1.2632" />
+          </svg>
+          <span class="text-sm">n8n</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <img src="https://cdn.simpleicons.org/airbyte" alt="Airbyte" class="h-16 mb-2" />
+          <span class="text-sm">Airbyte</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <img src="https://cdn.simpleicons.org/dbt" alt="dbt" class="h-16 mb-2" />
+          <span class="text-sm">dbt</span>
+        </div>
+        <!-- Cloud & Analytics -->
+        <div class="flex flex-col items-center">
+          <img src="https://img.icons8.com/?size=100&id=e6uRfPIDgoXi&format=png&color=FFFFFF" alt="AWS" class="h-16 mb-2" />
+          <span class="text-sm">AWS</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <img src="data:image/svg+xml,%3Csvg role='img' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23669DF6' d='M5.676 10.595h2.052v5.244a5.892 5.892 0 0 1-2.052-2.088v-3.156zm18.179 10.836a.504.504 0 0 1 0 .708l-1.716 1.716a.504.504 0 0 1-.708 0l-4.248-4.248a.206.206 0 0 1-.007-.007c-.02-.02-.028-.045-.043-.066a10.736 10.736 0 0 1-6.334 2.065C4.835 21.599 0 16.764 0 10.799S4.835 0 10.8 0s10.799 4.835 10.799 10.8c0 2.369-.772 4.553-2.066 6.333.025.017.052.028.074.05l4.248 4.248zm-5.028-10.632a8.015 8.015 0 1 0-8.028 8.028h.024a8.016 8.016 0 0 0 8.004-8.028zm-4.86 4.98a6.002 6.002 0 0 0 2.04-2.184v-1.764h-2.04v3.948zm-4.5.948c.442.057.887.08 1.332.072.4.025.8.025 1.2 0V7.692H9.468v9.035z'/%3E%3C/svg%3E" alt="BigQuery" class="h-16 mb-2" />
+          <span class="text-sm">BigQuery</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <img src="https://cdn.simpleicons.org/snowflake" alt="Snowflake" class="h-16 mb-2" />
+          <span class="text-sm">Snowflake</span>
+        </div>
+        <!-- BI & Visualization -->
+        <div class="flex flex-col items-center">
+          <img src="https://img.icons8.com/?size=100&id=BQJc3mm8NGYs&format=png&color=FFFFFF" alt="Tableau" class="h-16 mb-2" />
+          <span class="text-sm">Tableau</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <img src="https://cdn.simpleicons.org/metabase" alt="Metabase" class="h-16 mb-2" />
+          <span class="text-sm">Metabase</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <img src="https://cdn.simpleicons.org/looker" alt="Looker" class="h-16 mb-2" />
+          <span class="text-sm">Looker</span>
+        </div>
+        <!-- DevOps & CI/CD -->
+        <div class="flex flex-col items-center">
+          <img src="https://cdn.simpleicons.org/docker" alt="Docker" class="h-16 mb-2" />
+          <span class="text-sm">Docker</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <img src="https://cdn.simpleicons.org/kubernetes" alt="Kubernetes" class="h-16 mb-2" />
+          <span class="text-sm">Kubernetes</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <img src="https://cdn.simpleicons.org/terraform" alt="Terraform" class="h-16 mb-2" />
+          <span class="text-sm">Terraform</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <img src="https://cdn.simpleicons.org/jenkins" alt="Jenkins" class="h-16 mb-2" />
+          <span class="text-sm">Jenkins</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <img src="https://cdn.simpleicons.org/circleci" alt="CircleCI" class="h-16 mb-2" />
+          <span class="text-sm">CircleCI</span>
+        </div>
+        <!-- Tools & OS -->
+        <div class="flex flex-col items-center">
+          <img src="https://cdn.simpleicons.org/git" alt="Git" class="h-16 mb-2" />
+          <span class="text-sm">Git</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <img src="https://cdn.simpleicons.org/github" alt="GitHub" class="h-16 mb-2" />
+          <span class="text-sm">GitHub</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <img src="https://cdn.simpleicons.org/linux" alt="Linux" class="h-16 mb-2" />
+          <span class="text-sm">Linux</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <img src="data:image/svg+xml,%3Csvg role='img' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%2395BF47' d='M15.337 23.979l7.216-1.561s-2.604-17.613-2.625-17.73c-.018-.116-.114-.192-.211-.192s-1.929-.136-1.929-.136s-1.275-1.274-1.439-1.411c-.045-.037-.075-.057-.121-.074l-.914 21.104h.023zM11.71 11.305s-.81-.424-1.774-.424c-1.447 0-1.504.906-1.504 1.141 0 1.232 3.24 1.715 3.24 4.629 0 2.295-1.44 3.76-3.406 3.76-2.354 0-3.54-1.465-3.54-1.465l.646-2.086s1.245 1.066 2.28 1.066c.675 0 .975-.545.975-.932 0-1.619-2.654-1.694-2.654-4.359-.034-2.237 1.571-4.416 4.827-4.416 1.257 0 1.875.361 1.875.361l-.945 2.715-.02.01zM11.17.83c.136 0 .271.038.405.135-.984.465-2.064 1.639-2.508 3.992-.656.213-1.293.405-1.889.578C7.697 3.75 8.951.84 11.17.84V.83zm1.235 2.949v.135c-.754.232-1.583.484-2.394.736.466-1.777 1.333-2.645 2.085-2.971.193.501.309 1.176.309 2.1zm.539-2.234c.694.074 1.141.867 1.429 1.755-.349.114-.735.231-1.158.366v-.252c0-.752-.096-1.371-.271-1.871v.002zm2.992 1.289c-.02 0-.06.021-.078.021s-.289.075-.714.21c-.423-1.233-1.176-2.37-2.508-2.37h-.115C12.135.209 11.669 0 11.265 0 8.159 0 6.675 3.877 6.21 5.846c-1.194.365-2.063.636-2.16.674-.675.213-.694.232-.772.87-.075.462-1.83 14.063-1.83 14.063L15.009 24l.927-21.166z'/%3E%3C/svg%3E" alt="Shopify" class="h-16 mb-2" />
+          <span class="text-sm">Shopify</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <img src="https://img.icons8.com/?size=100&id=PvvcWRWxRKSR&format=png" alt="Meta" class="h-16 mb-2" />
+          <span class="text-sm">Meta</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cases -->
+  <section id="cases" class="py-20 bg-[#0b1118]">
+    <div class="container mx-auto px-6" data-aos="fade-up">
+      <h2 class="text-3xl font-bold text-emerald-400 text-center mb-12">Cases de Sucesso</h2>
+      <div class="space-y-8">
+        <article class="card p-6 rounded-xl hover:shadow-lg transition" data-aos="fade-right">
+          <h3 class="text-2xl font-semibold text-white mb-4">Integração Shopify → DHL</h3>
+          <p class="mb-2 text-slate-300"><strong class="text-white/90">Desafio:</strong> Processos de envio realizados manualmente entre Shopify e DHL.</p>
+          <p class="mb-2 text-slate-300"><strong class="text-white/90">Solução:</strong> Pipeline N8n e Airbyte integrando automaticamente com a API da DHL.</p>
+          <p class="mb-2 text-slate-300"><strong class="text-white/90">Tecnologias:</strong> API do Shopify, N8n, Airbyte, Node.js e API da DHL.</p>
+          <p class="text-slate-300"><strong class="text-white/90">Resultados:</strong> Redução de 85% do tempo de processamento manual.</p>
+        </article>
+        <article class="card p-6 rounded-xl hover:shadow-lg transition" data-aos="fade-left">
+          <h3 class="text-2xl font-semibold text-white mb-4">Análise & Automação Meta Ads</h3>
+          <p class="mb-2 text-slate-300"><strong class="text-white/90">Desafio:</strong> Alto volume de dados do Meta Ads sem análises em tempo real.</p>
+          <p class="mb-2 text-slate-300"><strong class="text-white/90">Solução:</strong> Pipelines com Airbyte e dbt, gerando relatórios automáticos através de N8n.</p>
+          <p class="mb-2 text-slate-300"><strong class="text-white/90">Tecnologias:</strong> Meta Ads, Airbyte, dbt, BigQuery e N8n.</p>
+          <p class="text-slate-300"><strong class="text-white/90">Resultados:</strong> 70% de redução no esforço manual de análise.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Clientes -->
+  <section id="clientes" class="py-20 bg-[#0e141c]">
+    <div class="container mx-auto px-6" data-aos="zoom-in">
+      <h2 class="text-3xl font-bold text-emerald-400 text-center mb-12">Clientes</h2>
+      <div class="flex justify-center items-center space-x-12 opacity-90">
+        <img src="use.png" alt="Use Uniforme" class="h-20" />
+        <img src="larroude.png" alt="Larroudé" class="h-20" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Contato -->
+  <section id="contato" class="py-20 bg-[#0b1118]">
+    <div class="container mx-auto px-6 text-center" data-aos="fade-up">
+      <h2 class="text-3xl font-bold text-emerald-400 mb-4">Fale com a Gama Solutions</h2>
+      <a href="https://wa.me/5511973567247" class="btn-primary inline-block rounded-full px-6 py-3 font-semibold">WhatsApp</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-8 text-center text-sm text-slate-400 bg-[#0e141c] border-t border-white/5">
+    © 2025 Gama Solutions • s.gomes.alexandre@gmail.com
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 800, once: true });
+
+    // menu mobile
+    const menuBtn = document.getElementById('menu-btn');
+    const menu = document.getElementById('menu');
+    menuBtn.addEventListener('click', () => {
+      const open = menu.classList.toggle('hidden') === false;
+      menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+
+    // efeito nav ao rolar
+    const nav = document.querySelector('.nav-overlay');
+    const onScroll = () => {
+      if (window.scrollY > 10) nav.classList.add('nav-scrolled');
+      else nav.classList.remove('nav-scrolled');
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll);
+  </script>
+</body>
+
+</html>
