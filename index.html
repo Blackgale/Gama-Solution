@@ -27,19 +27,11 @@
       --neon: #23ff95;
       /* glow */
 
-      /* espaçamento padrão do FAB */
-      --fab-right: 1.5rem;
-      /* ~right-6 */
-      --fab-bottom: 1.5rem;
-      /* ~bottom-6 */
-    }
-
-    /* Ajuste para áreas seguras (iOS) */
-    @supports (bottom: env(safe-area-inset-bottom)) {
-      :root {
-        --fab-right: max(1rem, env(safe-area-inset-right));
-        --fab-bottom: max(1rem, env(safe-area-inset-bottom));
-      }
+      /* Cores de marca (ajuste conforme tons oficiais) */
+      --use-primary: #F59E0B;
+      /* Use Uniforme - amarelo */
+      --larroude-primary: #7C3AED;
+      /* Larroudé - roxo */
     }
 
     body {
@@ -123,13 +115,6 @@
 
     .title-accent {
       color: var(--neon);
-    }
-
-    /* classe utilitária para posicionar o FAB usando variáveis + áreas seguras */
-    .safe-fab {
-      position: fixed;
-      right: var(--fab-right);
-      bottom: var(--fab-bottom);
     }
   </style>
 </head>
@@ -395,13 +380,63 @@
     </div>
   </section>
 
-  <!-- Clientes -->
+  <!-- Clientes (refeito) -->
   <section id="clientes" class="py-20 bg-[#0e141c]">
     <div class="container mx-auto px-6" data-aos="zoom-in">
       <h2 class="text-3xl font-bold text-emerald-400 text-center mb-12">Clientes</h2>
-      <div class="flex justify-center items-center space-x-12 opacity-90">
-        <img src="use.png" alt="Use Uniforme" class="h-20" />
-        <img src="larroude.png" alt="Larroudé" class="h-20" />
+
+      <div class="grid gap-6 md:grid-cols-2">
+
+        <!-- USE UNIFORME -->
+        <article class="relative overflow-hidden rounded-xl ring-1 ring-white/10 shadow-xl">
+          <div class="absolute inset-0" style="background: var(--use-primary);"></div>
+          <div class="relative p-6 md:p-8 text-white">
+            <header class="flex items-center gap-4 mb-4">
+              <img src="use.png" alt="Use Uniforme" class="h-12 w-auto drop-shadow-md">
+              <h3 class="text-2xl font-extrabold leading-tight">Use Uniforme</h3>
+            </header>
+            <p class="text-white/95 leading-relaxed">
+              <strong>Engenharia de Dados para operações de e-commerce.</strong>
+              Construímos pipelines entre Shopify e logística (n8n/Airbyte), modelagem analítica em <em>dbt</em> com
+              BigQuery e automações operacionais para pedidos, faturamento e expedição. Dashboards
+              táticos em Metabase/Looker suportam compras, estoque e SLA de entrega.
+            </p>
+            <div class="mt-5">
+              <a href="https://www.useuniforme.com.br" target="_blank" rel="noopener" class="inline-flex items-center rounded-full bg-white/15 px-4 py-2 text-sm font-semibold hover:bg-white/25 focus:outline-none focus:ring-2 focus:ring-white/60">
+                Visitar site
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="ml-2 h-4 w-4" fill="currentColor" aria-hidden="true">
+                  <path d="M12.293 3.293a1 1 0 011.414 0l4.999 5a1 1 0 010 1.414l-5 5a1 1 0 11-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- LARROUDÉ -->
+        <article class="relative overflow-hidden rounded-xl ring-1 ring-white/10 shadow-xl">
+          <div class="absolute inset-0" style="background: var(--larroude-primary);"></div>
+          <div class="relative p-6 md:p-8 text-white">
+            <header class="flex items-center gap-4 mb-4">
+              <img src="larroude.png" alt="Larroudé" class="h-12 w-auto drop-shadow-md">
+              <h3 class="text-2xl font-extrabold leading-tight">Larroudé</h3>
+            </header>
+            <p class="text-white/95 leading-relaxed">
+              <strong>Engenharia de Dados para crescimento e performance.</strong>
+              Unificação de dados de vendas e marketing (Shopify, Ads), camadas de métricas com <em>dbt</em>,
+              rotinas em n8n para conciliações diárias e monitoramento de estoque/catálogo. Painéis em BI
+              para ROAS, CAC, LTV e funil, acelerando decisões de mídia e merchandising.
+            </p>
+            <div class="mt-5">
+              <a href="https://www.larroude.com" target="_blank" rel="noopener" class="inline-flex items-center rounded-full bg-white/15 px-4 py-2 text-sm font-semibold hover:bg-white/25 focus:outline-none focus:ring-2 focus:ring-white/60">
+                Visitar site
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="ml-2 h-4 w-4" fill="currentColor" aria-hidden="true">
+                  <path d="M12.293 3.293a1 1 0 011.414 0l4.999 5a1 1 0 010 1.414l-5 5a1 1 0 11-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </article>
+
       </div>
     </div>
   </section>
@@ -420,14 +455,12 @@
   </footer>
 
   <!-- FAB WhatsApp (flutuante) -->
-  <!-- WhatsApp flutuante (fixo, responsivo e sem distorção) -->
   <a href="https://wa.me/5511973567247?text=Ol%C3%A1%2C%20vim%20do%20site%20Gama%20Solutions!" target="_blank" rel="noopener" aria-label="Falar no WhatsApp" title="Falar no WhatsApp" class="fixed z-[70] inline-flex items-center justify-center w-14 h-14 md:w-16 md:h-16 rounded-full bg-[#25D366] text-white shadow-xl ring-1 ring-white/10 transition
-         hover:-translate-y-0.5 hover:shadow-2xl focus:outline-none focus:ring-2 focus:ring-emerald-300/60" style="right: max(1.5rem, env(safe-area-inset-right)); bottom: max(1.5rem, env(safe-area-inset-bottom));">
-    <!-- Use IMG do SimpleIcons (sem distorção) -->
+           hover:-translate-y-0.5 hover:shadow-2xl focus:outline-none focus:ring-2 focus:ring-emerald-300/60" style="right: max(1.5rem, env(safe-area-inset-right)); bottom: max(1.5rem, env(safe-area-inset-bottom));">
     <img src="https://cdn.simpleicons.org/whatsapp/FFFFFF" alt="" class="block w-7 h-7 md:w-8 md:h-8" aria-hidden="true" />
   </a>
 
-  <!-- Scrmipts -->
+  <!-- Scripts -->
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
     AOS.init({ duration: 800, once: true });
